@@ -58,12 +58,25 @@ jobs:
         python -m pip install dist/*.tar.gz -v
 
         python packaging/build/smoketest.py
+        
+    - name: Set up QEMU
+      id: qemu
+      uses: docker/setup-qemu-action@v1
+      
+    - name: Available platforms
+      run: echo ${{ steps.qemu.outputs.platforms }}
+
+    - name: Build aarch64 packages
+      uses: RalfG/python-wheels-manylinux-build@v0.3.3-manylinux2014_aarch64
+      with:
+        python-versions: "cp36-cp36m cp37-cp37m cp38-cp38 cp39-cp39"
 
     - name: Upload sdist artifact
       uses: actions/upload-artifact@v2
       with:
         name: dist
         path: dist/*.tar.gz
+              dist/*-manylinux2014_aarch64.whl
 
 
   linux_libyaml:
