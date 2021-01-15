@@ -59,7 +59,7 @@ jobs:
 
         python packaging/build/smoketest.py
         
-    - name: Set up QEMU
+    - name: Set up QEMUU
       id: qemu
       uses: docker/setup-qemu-action@v1
       
